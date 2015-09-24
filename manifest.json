@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "Clear History",
+  "description": "Get rid of sketchy stuff",
+  "version": "1.0.0",
+
+  // "browser_action": {
+  //   "default_popup": "popup.html"
+  // },
+
+  "browser_action": {
+    "default_icon": "icon16.png"
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "icons": { 
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png" },
+
+  "permissions": [
+    "browsingData",
+    "history"
+  ]
+}

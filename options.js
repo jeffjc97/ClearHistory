@@ -1,6 +1,6 @@
 var urls;
 var time;
-var default_sites = ['https://www.google.com', 'https://www.facebook.com']
+var default_sites = ['https://www.google.com', 'https://www.facebook.com'];
 
 function populateSiteList(urls) {
 	console.log("popsitelist called");
@@ -23,7 +23,7 @@ function validateUrl(input_url) {
 			if (errorMsg == "Url is invalid."){
 				console.log("ERROR!!");
 				$('.invalid-url').show();
-				$('.urlinput').val('');
+				
 			}
 		}
 		// if it is correct, add it to the local storage and display on frontend
@@ -35,16 +35,22 @@ function validateUrl(input_url) {
 
 function addUrl(input_url) {
 	// backend
-	urls.push(input_url);
-	chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
-		// frontend
-		var clone = $("#accepted-clone").clone();
-		$(clone).find("#bulletText").text(input_url);
-		$(clone).find("#bulletList").attr("index", urls.length);
-		$(clone).css("display: inline");
-		$('#accepted-urls').append(clone);
-		$('.urlinput').val('');
-	});
+	//make sure there's no duplicate URLs
+	if (urls.indexOf(input_url) == -1) {
+		urls.push(input_url);
+		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
+			// frontend
+			var clone = $("#accepted-clone").clone();
+			$(clone).find("#bulletText").text(input_url);
+			$(clone).find("#bulletList").attr("index", urls.length);
+			$(clone).css("display: inline");
+			$('#accepted-urls').append(clone);
+		});
+	}
+	else {
+		$('.duplicate-url').show();
+	}
+	$('.urlinput').val('');	
 }
 
 
@@ -85,6 +91,9 @@ $(document).ready( function() {
 	$('.urlinput').keydown(function(event) {
 		if($('.invalid-url').css('display') != 'none') {
 			$('.invalid-url').hide();
+		}
+		if($('.duplicate-url').css('display') != 'none') {
+			$('.duplicate-url').hide();
 		}
 		if (event.keyCode == 13) {
 			console.log($(this).val());

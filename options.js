@@ -3,8 +3,9 @@ var time;
 var default_sites = ['https://www.gmail.com', 'https://en.wikipedia.org/wiki/Special:Random', 'http://www.bbc.com', 'http://finance.yahoo.com'];
 
 function populateSiteList(urls) {
-	console.log("popsitelist called");
-	console.log(urls);
+	if (urls.length == 0) {
+		$(".message").fadeIn(500);
+	}
 	for(i=0; i<urls.length; i++) {
 		var clone = $("#accepted-clone").clone();
 		$(clone).find("#bulletText").text(urls[i]);
@@ -15,30 +16,51 @@ function populateSiteList(urls) {
 	}
 }
 
+function learnRegExp(value){
+      return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+}
+
 function validateUrl(input_url) {
-	chrome.history.addUrl({url:input_url}, function() {
-		// check to see if the url is formatted correctly
-		if (chrome.extension.lastError){
-			var errorMsg = chrome.extension.lastError.message;
-			console.log(errorMsg);
-			if (errorMsg == "Url is invalid."){
-				console.log("ERROR!!");
-				$('.invalid-url').show();
-				
-			}
-		}
-		// if it is correct, add it to the local storage and display on frontend
-		else {
+	if (learnRegExp(input_url)) {
+		addUrl(input_url);
+	}
+	else{
+		input_url = "http://" + input_url;
+		if (learnRegExp(input_url)) {
 			addUrl(input_url);
 		}
-	});
+		else{
+			$('.invalid-url').show();
+		}
+	}
+	// chrome.history.addUrl({url:input_url}, function() {
+	// 	// check to see if the url is formatted correctly
+	// 	if (chrome.extension.lastError){
+	// 		var errorMsg = chrome.extension.lastError.message;
+	// 		console.log(errorMsg);
+	// 		if (errorMsg == "Url is invalid."){
+	// 			console.log("ERROR!!");
+	// 			$('.invalid-url').show();
+				
+	// 		}
+	// 	}
+	// 	// if it is correct, add it to the local storage and display on frontend
+	// });
 }
 
 function deleteUrl(e){
 	var index = $(e).parent().attr("index");
-	urls.splice(i,1);
+	console.log(index);
+	urls.splice(index,1);
+	if (urls.length == 0) {
+		$(".message").fadeIn(500);
+	}
 	chrome.storage.sync.set({'time':time, 'urls':urls}, function(){
-		$(e).remove();
+		$(e).parent().fadeOut(200, function(){
+			console.log(urls);
+			$("#accepted-urls").empty();
+			populateSiteList(urls);
+		});
 	});
 
 }
@@ -50,11 +72,12 @@ function addUrl(input_url) {
 		urls.push(input_url);
 		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
 			// frontend
+			$(".message").hide();
 			var clone = $("#accepted-clone").clone();
 			$(clone).find("#bulletText").text(input_url);
-			$(clone).find("#bulletList").attr("index", urls.length);
-			$(clone).css("display: inline");
+			$(clone).find("#bulletList").attr("index", urls.length-1);
 			$(clone).find("span.iconClick").click(function(){deleteUrl(this)});
+			$(clone).show();
 			$('#accepted-urls').append(clone);
 		});
 	}

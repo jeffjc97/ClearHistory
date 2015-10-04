@@ -31,14 +31,19 @@ function validateUrl(input_url) {
 }
 
 function addUrl(input_url) {
-	// backend
-	urls.push(input_url);
-	chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
-		// frontend
-		url_entry = '<li index="' + urls.length + '">' + input_url + '</li>';
-		$('#accepted-urls').append(url_entry);
-		$('.urlinput').val('');
-	});
+	// backend, make sure the url is not already in the list
+	if (urls.indexOf(input_url) == -1) {
+		urls.push(input_url);
+		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
+			// frontend
+			url_entry = '<li index="' + urls.length + '">' + input_url + '</li>';
+			$('#accepted-urls').append(url_entry);
+		});
+	}
+	else {
+		$('.duplicate-url').show();
+	}
+	$('.urlinput').val('');
 }
 
 function deleteUrl(input_url) {
@@ -83,6 +88,9 @@ $(document).ready( function() {
 	 $('.urlinput').keydown(function(event) {
 		if($('.invalid-url').css('display') != 'none') {
 			$('.invalid-url').hide();
+		}
+		if($('.duplicate-url').css('display') != 'none') {
+			$('.duplicate-url').hide();
 		}
 		if (event.keyCode == 13) {
 			console.log($(this).val());

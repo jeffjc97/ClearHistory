@@ -35,7 +35,7 @@
 			    width: 30%!important;
     			margin-top: 1%;
 			}
-			.invalid-url {
+			.invalid-url, .duplicate-url {
 				display: none;
 				font-family: 'Titillium Web', sans-serif;
 			    font-size: 12px;
@@ -60,7 +60,8 @@
 		</div></div>
 		<div class="info">Websites to add once history is cleared (copy it from the address bar):</div>
 		<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
-		<input class="urlinput form-control" placeholder="Enter url..."></input>
+		<div class="duplicate-url">You already have that url in your list!.</div>
+		<input class="urlinput form-control" placeholder="Add new website..."></input>
 		<div id="accepted-wrapper"><ul id="accepted-urls"></ul></div>
 	</body>
 </html> 

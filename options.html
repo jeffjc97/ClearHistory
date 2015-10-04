@@ -30,10 +30,17 @@
     			background-color: #FFAD5C!important;
 			}
 			.urlinput {
-				resize: none;
+			    margin-left: auto;
+			    margin-right: auto;
+			    width: 30%!important;
+    			margin-top: 1%;
 			}
 			.invalid-url {
 				display: none;
+				font-family: 'Titillium Web', sans-serif;
+			    font-size: 12px;
+			    text-align: center;
+			    color: #D33200;
 			}
 		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -51,8 +58,9 @@
 		  <button type="button" time="1" class="btn btn-default">Day</button>
 		  <button type="button" time="2" class="btn btn-default">The beginning of time</button>
 		</div></div>
+		<div class="info">Websites to add once history is cleared (copy it from the address bar):</div>
 		<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
-		<textarea class="urlinput"></textarea>
+		<input class="urlinput form-control" placeholder="Enter url..."></input>
 		<div id="accepted-wrapper"><ul id="accepted-urls"></ul></div>
 	</body>
 </html> 

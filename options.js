@@ -1,6 +1,6 @@
 var urls;
 var time;
-var default_sites = ['https://www.google.com', 'https://www.facebook.com']
+var default_sites = ['https://www.google.com', 'https://www.facebook.com'];
 
 function populateSiteList(urls) {
 	console.log("popsitelist called");
@@ -20,7 +20,7 @@ function validateUrl(input_url) {
 			if (errorMsg == "Url is invalid."){
 				console.log("ERROR!!");
 				$('.invalid-url').show();
-				$('.urlinput').val('');
+				
 			}
 		}
 		// if it is correct, add it to the local storage and display on frontend
@@ -37,6 +37,7 @@ function addUrl(input_url) {
 		// frontend
 		url_entry = '<li index="' + urls.length + '">' + input_url + '</li>';
 		$('#accepted-urls').append(url_entry);
+		$('.urlinput').val('');
 	});
 }
 

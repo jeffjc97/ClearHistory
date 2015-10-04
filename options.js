@@ -6,8 +6,11 @@ function populateSiteList(urls) {
 	console.log("popsitelist called");
 	console.log(urls);
 	for(i=0; i<urls.length; i++) {
-		url_entry = '<li index="' + i + '">' + urls[i] + '</li>';
-		$('#accepted-urls').append(url_entry);
+		var clone = $("#accepted-clone").clone();
+		$(clone).find("#bulletText").text(urls[i]);
+		$(clone).find("#bulletList").attr("index", i);
+		$(clone).show();
+		$('#accepted-urls').append(clone);
 	}
 }
 
@@ -31,25 +34,25 @@ function validateUrl(input_url) {
 }
 
 function addUrl(input_url) {
-	// backend, make sure the url is not already in the list
+	// backend
+	//make sure there's no duplicate URLs
 	if (urls.indexOf(input_url) == -1) {
 		urls.push(input_url);
 		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
 			// frontend
-			url_entry = '<li index="' + urls.length + '">' + input_url + '</li>';
-			$('#accepted-urls').append(url_entry);
+			var clone = $("#accepted-clone").clone();
+			$(clone).find("#bulletText").text(input_url);
+			$(clone).find("#bulletList").attr("index", urls.length);
+			$(clone).css("display: inline");
+			$('#accepted-urls').append(clone);
 		});
 	}
 	else {
 		$('.duplicate-url').show();
 	}
-	$('.urlinput').val('');
+	$('.urlinput').val('');	
 }
 
-function deleteUrl(input_url) {
-	// backend
-	// frontend
-}
 
 $(document).ready( function() {
 	// alert("yoo");
@@ -85,7 +88,7 @@ $(document).ready( function() {
 		$(this).addClass("selected");
 	})
 
-	 $('.urlinput').keydown(function(event) {
+	$('.urlinput').keydown(function(event) {
 		if($('.invalid-url').css('display') != 'none') {
 			$('.invalid-url').hide();
 		}
@@ -96,6 +99,11 @@ $(document).ready( function() {
 			console.log($(this).val());
 			validateUrl($(this).val());
 			return false;
-		 }
-	});
+		}
+	})
+	 
+	$('.iconClick').click(function(e) {
+		console.log("swag");
+		console.log(this.attr("class"));
+	})
 });

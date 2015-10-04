@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Clear History Options</title>
+		<title>History Burner Options</title>
 		<style type="text/css">
 			.title {
 				font-family: 'Titillium Web', sans-serif;
@@ -42,6 +42,18 @@
 			    text-align: center;
 			    color: #D33200;
 			}
+			ul{
+				list-style-type: none;
+			}
+			.fa-times{
+				color:#D33200;
+			}
+			#accepted-clone{
+				display: none;
+			}
+			#iconClick{
+				display: block;
+			}
 		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -62,6 +74,12 @@
 		<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
 		<div class="duplicate-url">You already have that url in your list!.</div>
 		<input class="urlinput form-control" placeholder="Add new website..."></input>
-		<div id="accepted-wrapper"><ul id="accepted-urls"></ul></div>
+		<div id="accepted-wrapper">
+			<ul id="accepted-urls">
+				<div id="accepted-clone" >
+					<li id="bulletList" index="-1"<span class="iconClick"><i class="fa-times fa fw"></i> </span><text id="bulletText"></text></li>
+				</div>
+			</ul>
+		</div>
 	</body>
 </html> 

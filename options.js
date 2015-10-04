@@ -9,6 +9,7 @@ function populateSiteList(urls) {
 		var clone = $("#accepted-clone").clone();
 		$(clone).find("#bulletText").text(urls[i]);
 		$(clone).find("#bulletList").attr("index", i);
+		$(clone).find("span.iconClick").click(function() {deleteUrl(this)});
 		$(clone).show();
 		$('#accepted-urls').append(clone);
 	}
@@ -33,6 +34,15 @@ function validateUrl(input_url) {
 	});
 }
 
+function deleteUrl(e){
+	var index = $(e).parent().attr("index");
+	urls.splice(i,1);
+	chrome.storage.sync.set({'time':time, 'urls':urls}, function(){
+		$(e).remove();
+	});
+
+}
+
 function addUrl(input_url) {
 	// backend
 	//make sure there's no duplicate URLs
@@ -44,6 +54,7 @@ function addUrl(input_url) {
 			$(clone).find("#bulletText").text(input_url);
 			$(clone).find("#bulletList").attr("index", urls.length);
 			$(clone).css("display: inline");
+			$(clone).find("span.iconClick").click(function(){deleteUrl(this)});
 			$('#accepted-urls').append(clone);
 		});
 	}
@@ -102,8 +113,4 @@ $(document).ready( function() {
 		}
 	})
 	 
-	$('.iconClick').click(function(e) {
-		console.log("swag");
-		console.log(this.attr("class"));
-	})
 });

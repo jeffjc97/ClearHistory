@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Clear History Options</title>
+		<title>History Burner Options</title>
 		<style type="text/css">
 			.title {
 				font-family: 'Titillium Web', sans-serif;
@@ -35,7 +35,7 @@
 			    width: 30%!important;
     			margin-top: 1%;
 			}
-			.invalid-url, .duplicate-url {
+			.invalid-url, .duplicate-url, .message {
 				display: none;
 				font-family: 'Titillium Web', sans-serif;
 			    font-size: 12px;
@@ -54,6 +54,11 @@
 			#iconClick{
 				display: inline-block;
 			}
+			#accepted-wrapper{
+			    margin-left: 32%;
+			    margin-top: 1%;
+			    margin-bottom: 10px;
+			}
 		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -62,24 +67,27 @@
 		<script type="text/javascript" src="options.js"></script>
 	</head>
 	<body>
-		<div class="title">Clear History Options</div>
-		<img src="icon128.png" alt="Clear History" class="icon">
-		<div class="info">Clear history from the past... (don't worry, we won't judge)</div>
-		<div class="text-center wrapper"><div class="btn-group btn-group-lg" role="group" aria-label="...">
-		  <button type="button" time="0" class="btn btn-default">Hour</button>
-		  <button type="button" time="1" class="btn btn-default">Day</button>
-		  <button type="button" time="2" class="btn btn-default">The beginning of time</button>
-		</div></div>
-		<div class="info">Websites to add once history is cleared (copy it from the address bar):</div>
-		<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
-		<div class="duplicate-url">You already have that url in your list!.</div>
-		<input class="urlinput form-control" placeholder="Add new website..."></input>
-		<div id="accepted-wrapper">
-			<ul id="accepted-urls">
+		<div class="container">
+			<div class="title">History Burner Options</div>
+			<img src="icon128.png" alt="Clear History" class="icon">
+			<div class="info">Clear history from the past... (don't worry, we won't judge)</div>
+			<div class="text-center wrapper"><div class="btn-group btn-group-lg" role="group" aria-label="...">
+			  <button type="button" time="0" class="btn btn-default">Hour</button>
+			  <button type="button" time="1" class="btn btn-default">Day</button>
+			  <button type="button" time="2" class="btn btn-default">The beginning of time</button>
+			</div></div>
+			<div class="info">Websites to add once history is cleared (copy it from the address bar):</div>
+			<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
+			<div class="duplicate-url">You already have that url in your list!.</div>
+			<input class="urlinput form-control" placeholder="Add new website..."></input>
+			<div class="message">You haven't picked any filler websites! Want to add one?</div>
+			<div id="accepted-wrapper">
 				<div id="accepted-clone" >
 					<li id="bulletList" index="-1"><span class="iconClick"><i class="fa-times fa fw"></i> </span><text id="bulletText"></text></li>
 				</div>
-			</ul>
+				<ul id="accepted-urls">
+				</ul>
+			</div>
 		</div>
 	</body>
 </html> 

@@ -1,6 +1,6 @@
 var urls;
 var time;
-var default_sites = ['https://www.google.com', 'https://www.facebook.com'];
+var default_sites = ['https://www.gmail.com', 'https://en.wikipedia.org/wiki/Special:Random', 'http://www.bbc.com', 'http://finance.yahoo.com'];
 
 function populateSiteList(urls) {
 	console.log("popsitelist called");

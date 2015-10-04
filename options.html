@@ -35,6 +35,18 @@
 			.invalid-url {
 				display: none;
 			}
+			ul{
+				list-style-type: none;
+			}
+			.fa-times{
+				color:#D33200;
+			}
+			#accepted-clone{
+				display: none;
+			}
+			#iconClick{
+				display: block;
+			}
 		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -53,6 +65,12 @@
 		</div></div>
 		<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
 		<textarea class="urlinput"></textarea>
-		<div id="accepted-wrapper"><ul id="accepted-urls"></ul></div>
+		<div id="accepted-wrapper">
+			<ul id="accepted-urls">
+				<div id="accepted-clone" >
+					<li id="bulletList" index="-1"<span class="iconClick"><i class="fa-times fa fw"></i> </span><text id="bulletText"></text></li>
+				</div>
+			</ul>
+		</div>
 	</body>
 </html> 

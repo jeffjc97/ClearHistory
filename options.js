@@ -10,7 +10,7 @@ function populateSiteList(urls) {
 		var clone = $("#accepted-clone").clone();
 		$(clone).find("#bulletText").text(urls[i]);
 		$(clone).find("#bulletList").attr("index", i);
-		$(clone).find("span.iconClick").click(function() {deleteUrl(this)});
+		$(clone).find("span.icon-click").click(function() {deleteUrl(this)});
 		$(clone).show();
 		$('#accepted-urls').append(clone);
 	}
@@ -76,7 +76,7 @@ function addUrl(input_url) {
 			var clone = $("#accepted-clone").clone();
 			$(clone).find("#bulletText").text(input_url);
 			$(clone).find("#bulletList").attr("index", urls.length-1);
-			$(clone).find("span.iconClick").click(function(){deleteUrl(this)});
+			$(clone).find("span.icon-click").click(function(){deleteUrl(this)});
 			$(clone).show();
 			$('#accepted-urls').append(clone);
 		});
@@ -113,7 +113,7 @@ $(document).ready( function() {
 		populateSiteList(urls);
 	})
 
-	$('.btn').click(function() {
+	$('.time-button').click(function() {
 		$('.btn-group').find('.selected').removeClass('selected');
 		time = $(this).attr("time");
 		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
@@ -135,5 +135,11 @@ $(document).ready( function() {
 			return false;
 		}
 	})
+
+	$("#restore-defaults").click(function(){
+		default_sites.forEach(function(e){
+			addUrl(e);
+		});
+	});
 	 
 });

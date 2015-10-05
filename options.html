@@ -51,13 +51,16 @@
 			#accepted-clone{
 				display: none;
 			}
-			#iconClick{
+			#icon-click{
 				display: inline-block;
 			}
 			#accepted-wrapper{
 			    margin-left: 32%;
 			    margin-top: 1%;
 			    margin-bottom: 10px;
+			}
+			#restore-defaults{
+				margin-top: 1%;
 			}
 		</style>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -72,18 +75,21 @@
 			<img src="icon128.png" alt="Clear History" class="icon">
 			<div class="info">Clear history from the past... (don't worry, we won't judge)</div>
 			<div class="text-center wrapper"><div class="btn-group btn-group-lg" role="group" aria-label="...">
-			  <button type="button" time="0" class="btn btn-default">Hour</button>
-			  <button type="button" time="1" class="btn btn-default">Day</button>
-			  <button type="button" time="2" class="btn btn-default">The beginning of time</button>
+			  <button type="button" time="0" class="time-button btn btn-default">Hour</button>
+			  <button type="button" time="1" class="time-button btn btn-default">Day</button>
+			  <button type="button" time="2" class="time-button btn btn-default">The beginning of time</button>
 			</div></div>
 			<div class="info">Websites to add once history is cleared (copy it from the address bar):</div>
 			<div class="invalid-url">Invalid URL entered. Please copy the url exactly as displayed in the address bar.</div>
 			<div class="duplicate-url">You already have that url in your list!.</div>
 			<input class="urlinput form-control" placeholder="Add new website..."></input>
-			<div class="message">You haven't picked any filler websites! Want to add one?</div>
+			<div class="message">You haven't picked any filler websites! Want to add some?
+				<br><a id="restore-defaults" class="btn btn-default btn-sm">
+  				<i class="fa fw fa-refresh"></i> Restore Defaults</a>
+			</div>
 			<div id="accepted-wrapper">
 				<div id="accepted-clone" >
-					<li id="bulletList" index="-1"><span class="iconClick"><i class="fa-times fa fw"></i> </span><text id="bulletText"></text></li>
+					<li id="bulletList" index="-1"><span class="icon-click"><i class="fa-times fa fw"></i> </span><text id="bulletText"></text></li>
 				</div>
 				<ul id="accepted-urls">
 				</ul>

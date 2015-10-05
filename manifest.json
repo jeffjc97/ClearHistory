@@ -3,11 +3,7 @@
 
   "name": "History Burner",
   "description": "Historical revisionism at its finest.",
-  "version": "1.0.0",
-
-  // "browser_action": {
-  //   "default_popup": "popup.html"
-  // },
+  "version": "1.0.1",
 
   "browser_action": {
     "default_icon": "icon16.png"
@@ -28,6 +24,7 @@
     "browsingData",
     "history",
     "storage",
+    "tabs",
     "https://ajax.googleapis.com/"
   ]
 }

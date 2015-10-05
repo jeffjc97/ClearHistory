@@ -14,12 +14,25 @@ function addUrls(sites) {
 	}
 }
 
+function closeTabs(setting) {
+	if(setting == 1) {
+		chrome.tabs.getCurrent(function(Tab tab) {
+			chrome.tabs.remove(tab.id);
+		})
+	}
+	else if(setting == 2) {
+		chrome.windows.getCurrent(function(Window window) {
+			chrome.windows.remove(window.id);
+		})
+	}
+}
+
 chrome.browserAction.onClicked.addListener(function () {
 	chrome.storage.sync.get('time', function(result) {
 		time = result['time'];
 		// console.log(time);
 		if(time === undefined) {
-			chrome.storage.sync.set({'time':0, 'urls':default_sites});
+			chrome.storage.sync.set({'tab':0 , 'time':0, 'urls':default_sites});
 			timeToClear = timeArray[0];
 		}
 		else {
@@ -36,7 +49,7 @@ chrome.browserAction.onClicked.addListener(function () {
 	}, {
 		"history": true
 	}, function () {
-		console.log("History Cleared");
+		alert("History Burned!");
 	});
 
 	chrome.storage.sync.get('urls', function(result) {
@@ -49,4 +62,21 @@ chrome.browserAction.onClicked.addListener(function () {
 			addUrls(urls);
 		}
 	})
+
+	chrome.storage.sync.get('tab', function(result) {
+		tab = result['tab'];
+		// console.log(time);
+		if(tab === undefined) {
+			closeTabs(0);
+		}
+		else {
+			closeTabs(tab);
+		}
+	})
 })
+
+chrome.runtime.onInstalled.addListener(function (object) {
+    chrome.tabs.create({url: "options.html"}, function (tab) {
+        console.log("Options launched!");
+    });
+});

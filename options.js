@@ -1,5 +1,6 @@
 var urls;
 var time;
+var tab;
 var default_sites = ['https://www.gmail.com', 'https://en.wikipedia.org/wiki/Special:Random', 'http://www.bbc.com', 'http://finance.yahoo.com'];
 
 function populateSiteList(urls) {
@@ -55,7 +56,7 @@ function deleteUrl(e){
 	if (urls.length == 0) {
 		$(".message").fadeIn(500);
 	}
-	chrome.storage.sync.set({'time':time, 'urls':urls}, function(){
+	chrome.storage.sync.set({'tab':0, 'time':time, 'urls':urls}, function(){
 		$(e).parent().fadeOut(200, function(){
 			console.log(urls);
 			$("#accepted-urls").empty();
@@ -70,7 +71,7 @@ function addUrl(input_url) {
 	//make sure there's no duplicate URLs
 	if (urls.indexOf(input_url) == -1) {
 		urls.push(input_url);
-		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
+		chrome.storage.sync.set({'tab':0, 'time':time, 'urls':urls}, function() {
 			// frontend
 			$(".message").hide();
 			var clone = $("#accepted-clone").clone();
@@ -94,12 +95,26 @@ $(document).ready( function() {
 		time = result['time'];
 		console.log(time);
 		if(time === undefined) {
-			chrome.storage.sync.set({'time':0, 'urls':default_sites}, function() {
-				$('.btn-group').find('[time="0"]').addClass("selected")
+			chrome.storage.sync.set({'tab':0, 'time':0, 'urls':default_sites}, function() {
+				$('.time-button-group').find('[time="0"]').addClass("selected")
 			});
 		}
 		else {
-			$('.btn-group').find('[time="' + time + '"]').addClass("selected");
+			$('.time-button-group').find('[time="' + time + '"]').addClass("selected");
+		}
+	})
+
+	chrome.storage.sync.get('tab', function(result) {
+		tab = result['tab'];
+		// kinda bad but fix later
+		if(tab === undefined) {
+			tab = 0;
+			chrome.storage.sync.set({'tab':0, 'time':0, 'urls':default_sites}, function() {
+				$('.tab-button-group').find('[tab="0"]').addClass("selected")
+			});
+		}
+		else {
+			$('.tab-button-group').find('[tab="' + tab + '"]').addClass("selected");			
 		}
 	})
 
@@ -114,10 +129,19 @@ $(document).ready( function() {
 	})
 
 	$('.time-button').click(function() {
-		$('.btn-group').find('.selected').removeClass('selected');
+		$('.time-button-group').find('.selected').removeClass('selected');
 		time = $(this).attr("time");
-		chrome.storage.sync.set({'time':time, 'urls':urls}, function() {
+		chrome.storage.sync.set({'tab':tab, 'time':time, 'urls':urls}, function() {
 			console.log("New Time: ", time);
+		});
+		$(this).addClass("selected");
+	})
+
+	$('.tab-button').click(function() {
+		$('.tab-button-group').find('.selected').removeClass('selected');
+		tab = $(this).attr("tab");
+		chrome.storage.sync.set({'tab':tab, 'time':time, 'urls':urls}, function() {
+			console.log("New Tab: ", tab);
 		});
 		$(this).addClass("selected");
 	})

@@ -14,20 +14,18 @@ function addUrls(sites) {
 	}
 }
 
-function closeTabs(setting) {
+function closeTabs(setting, active_tab) {
 	if(setting == 1) {
-		chrome.tabs.getCurrent(function(Tab tab) {
-			chrome.tabs.remove(tab.id);
-		})
+		chrome.tabs.remove(active_tab.id);
 	}
 	else if(setting == 2) {
-		chrome.windows.getCurrent(function(Window window) {
+		chrome.windows.getCurrent(function(window) {
 			chrome.windows.remove(window.id);
 		})
 	}
 }
 
-chrome.browserAction.onClicked.addListener(function () {
+chrome.browserAction.onClicked.addListener(function (active_tab) {
 	chrome.storage.sync.get('time', function(result) {
 		time = result['time'];
 		// console.log(time);
@@ -67,10 +65,10 @@ chrome.browserAction.onClicked.addListener(function () {
 		tab = result['tab'];
 		// console.log(time);
 		if(tab === undefined) {
-			closeTabs(0);
+			closeTabs(0, active_tab);
 		}
 		else {
-			closeTabs(tab);
+			closeTabs(tab, active_tab);
 		}
 	})
 })

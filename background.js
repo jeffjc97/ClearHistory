@@ -28,16 +28,16 @@ chrome.browserAction.onClicked.addListener(function () {
 		clearDate = (new Date()).getTime() - timeToClear;
 	})
 
-	// chrome.browsingData.remove({
-	// 	"since": clearDate,
-	// 	"originTypes": {
-	// 		"unprotectedWeb": true
-	// 	}
-	// }, {
-	// 	"history": true
-	// }, function () {
-	// 	alert("Cleared!");
-	// });
+	chrome.browsingData.remove({
+		"since": clearDate,
+		"originTypes": {
+			"unprotectedWeb": true
+		}
+	}, {
+		"history": true
+	}, function () {
+		console.log("History Cleared");
+	});
 
 	chrome.storage.sync.get('urls', function(result) {
 		urls = result['urls'];

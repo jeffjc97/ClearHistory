@@ -6,3 +6,5 @@ This tool will clear your history and allow you to fill it with anything you des
 
 Don't want to clear your entire history? Easy, just select one of the choices on the options page!
 
+https://chrome.google.com/webstore/detail/history-burner/mfmeheeibfpnkkobpeiclmihpipnnnlp
+
